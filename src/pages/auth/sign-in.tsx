@@ -21,9 +21,6 @@ export function SignIn() {
 
   async function handleSignIn(data: SignInForm) {
     try {
-      // biome-ignore lint/suspicious/noConsole: <teste>
-      console.log(data)
-
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
       toast.success('Enviamos um link para o seu e-mail. Acesse-o para entrar na plataforma.', {

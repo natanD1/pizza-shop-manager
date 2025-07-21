@@ -26,9 +26,6 @@ export function SignUp() {
 
   async function handleSignUp(data: SignUpForm) {
     try {
-      // biome-ignore lint/suspicious/noConsole: <teste>
-      console.log(data)
-
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
       toast.success('Restaurante cadastrado com sucesso!', {
