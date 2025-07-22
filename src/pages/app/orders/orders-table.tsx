@@ -1,16 +1,24 @@
 import { ArrowRight, Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { TableCell, TableRow } from '@/components/ui/table'
+import { OrderDetails } from './orders-details'
 
 export function OrderTable() {
   return (
     <TableRow>
       <TableCell>
-        <Button size="xs" variant="outline">
-          <Search className="h-3 w-3" />
-          {/* FEAT: O "sr-only" só e disponível para o leitor de tela, trazendo acessibilidade*/}
-          <span className="sr-only">Detalhes do pedido</span>
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button size="xs" variant="outline">
+              <Search className="h-3 w-3" />
+              {/* FEAT: O "sr-only" só e disponível para o leitor de tela, trazendo acessibilidade*/}
+              <span className="sr-only">Detalhes do pedido</span>
+            </Button>
+          </DialogTrigger>
+
+          <OrderDetails />
+        </Dialog>
       </TableCell>
       <TableCell className="font-medium font-mono text-xs">1546548955555</TableCell>
       <TableCell className="text-muted-foreground">há 15 minutos</TableCell>
