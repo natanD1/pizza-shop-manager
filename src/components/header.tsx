@@ -11,7 +11,7 @@ export function Header() {
         <Pizza className="h-6 w-6" />
         <Separator className="h-6" orientation="vertical" />
         <nav className="flex items-center space-x-4 lg:space-x-6">
-          <NavLink to="/dashboard">
+          <NavLink to="/">
             <Home className="h-4 w-4" />
             Início
           </NavLink>
