@@ -1,8 +1,10 @@
 import { Label } from '@radix-ui/react-label'
+import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { registerRestaurant } from '@/api/register-restaurant'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
@@ -24,14 +26,23 @@ export function SignUp() {
     formState: { isSubmitting },
   } = useForm<SignUpForm>()
 
+  const { mutateAsync: registerRestaurantFn } = useMutation({
+    mutationFn: registerRestaurant,
+  })
+
   async function handleSignUp(data: SignUpForm) {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await registerRestaurantFn({
+        managerName: data.managementName,
+        restaurantName: data.restaurantName,
+        email: data.email,
+        phone: data.phone,
+      })
 
       toast.success('Restaurante cadastrado com sucesso!', {
         action: {
           label: 'Login',
-          onClick: () => navigate('/sign-in'),
+          onClick: () => navigate(`/sign-in?email=${data.email}`),
         },
       })
     } catch {
@@ -74,8 +85,8 @@ export function SignUp() {
             <Input id="email" type="email" {...register('email')} />
           </div>
 
-          <Button className="w-full" disabled={isSubmitting} type="submit">
-            Entrar
+          <Button className="w-full text-white" disabled={isSubmitting} type="submit">
+            Cadastrar
           </Button>
 
           <p className="px-6 text-center text-muted-foreground text-sm leading-relaxed">
