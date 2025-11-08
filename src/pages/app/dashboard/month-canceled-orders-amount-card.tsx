@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { CircleX } from 'lucide-react'
 import { getMonthCanceledOrdersAmount } from '@/api/get-month-canceled-orders-amount'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { MetricCardSkeleton } from './metric-card-skeleton'
 
 export function MonthCanceledOrderAmountCard() {
   const { data: monthCanceledOrderAmount } = useQuery({
@@ -16,7 +17,7 @@ export function MonthCanceledOrderAmountCard() {
         <CircleX className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        {monthCanceledOrderAmount && (
+        {monthCanceledOrderAmount ? (
           <>
             <span className="font-bold text-2xl tracking-tight">
               {monthCanceledOrderAmount?.amount.toLocaleString('pt-BR')}
@@ -39,6 +40,8 @@ export function MonthCanceledOrderAmountCard() {
               )}
             </p>
           </>
+        ) : (
+          <MetricCardSkeleton />
         )}
       </CardContent>
     </Card>
