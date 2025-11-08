@@ -1,8 +1,10 @@
 import { Label } from '@radix-ui/react-label'
+import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { signIn } from '@/api/sign-in'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
@@ -13,15 +15,25 @@ const signInForm = z.object({
 type SignInForm = z.infer<typeof signInForm>
 
 export function SignIn() {
+  const [searchParams] = useSearchParams()
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SignInForm>()
+  } = useForm<SignInForm>({
+    defaultValues: {
+      email: searchParams.get('email') ?? '',
+    },
+  })
+
+  const { mutateAsync: authenticate } = useMutation({
+    mutationFn: signIn,
+  })
 
   async function handleSignIn(data: SignInForm) {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await authenticate(data)
 
       toast.success('Enviamos um link para o seu e-mail. Acesse-o para entrar na plataforma.', {
         action: {
@@ -30,7 +42,7 @@ export function SignIn() {
         },
       })
     } catch {
-      toast.error('Credenciais Inválidas')
+      toast.error('E-mail inválido ou não cadastrado.')
     }
   }
 
@@ -54,8 +66,8 @@ export function SignIn() {
             <Input id="email" type="email" {...register('email')} />
           </div>
 
-          <Button className="w-full cursor-pointer" disabled={isSubmitting} type="submit">
-            Entrar
+          <Button className="w-full cursor-pointer text-white" disabled={isSubmitting} type="submit">
+            Acessar Painel
           </Button>
         </form>
       </div>
