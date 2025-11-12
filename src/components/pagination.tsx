@@ -13,10 +13,7 @@ export function Pagination({ pageIndex, totalCount, perPage, onPageChange }: Pag
 
   return (
     <div className="flex items-center justify-between">
-      <span className="text-muted-foreground text-sm">
-        Total de {totalCount}
-        item(s)
-      </span>
+      <span className="text-muted-foreground text-sm">Total de {totalCount} item(s)</span>
       <div className="flex items-center gap-6 lg:gap-8">
         <div className="font-medium text-sm">
           Pagina {pageIndex + 1} de {pages}

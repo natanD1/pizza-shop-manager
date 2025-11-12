@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router'
+import NotFoundImage from '@/assets/error404dog.svg'
 
 export function NotFound() {
   useEffect(() => {
@@ -8,6 +9,10 @@ export function NotFound() {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-2">
+      <picture>
+        <img alt="Página não encontrada" className="w-64 md:w-96" src={NotFoundImage} />
+      </picture>
+
       <h1 className="font-bold text-4xl">Página não encontrada</h1>
       <p className="text-accent-foreground">
         Voltar para o {''}
